@@ -1,135 +1,45 @@
-/* ===== 全体 ===== */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: sans-serif;
   background: #fff7fb;
-  margin: 0;
   padding: 16px;
-  color: #444;
 }
 
 h1 {
   text-align: center;
-  color: #ff6fa5;
-  margin-bottom: 20px;
 }
 
-h2 {
-  font-size: 16px;
-  margin-top: 24px;
-  margin-bottom: 8px;
-  color: #ff6fa5;
+.box {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-/* ===== 入力欄 ===== */
-input {
-  width: 65%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ffd6e7;
-  font-size: 14px;
-  margin-right: 8px;
-}
-
-/* ===== ボタン ===== */
 button {
   padding: 10px 14px;
   border: none;
-  border-radius: 12px;
-  background: #ff8fb8;
+  border-radius: 10px;
+  background: #ffb6d5;
   color: white;
+  margin: 4px;
   font-size: 14px;
-  cursor: pointer;
 }
 
-button:active {
-  transform: scale(0.97);
+input {
+  padding: 8px;
+  margin: 4px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
-/* 小さい削除ボタン */
-button.mini-delete {
-  background: transparent;
-  color: #ff8fb8;
-  font-size: 16px;
-  padding: 4px 6px;
-}
-
-/* ===== メンバー一覧（コンパクト表示） ===== */
-#memberList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+#memberList, #songList {
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  margin-top: 10px;
 }
 
-.member-item {
-  background: #ffe4ef;
-  border-radius: 10px;
-  padding: 6px;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* ===== 曲 ===== */
-#songList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.song-box {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(255, 150, 180, 0.15);
-  position: relative;
-}
-
-.song-title {
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* メンバー選択（コンパクト） */
-.song-members {
-  margin-top: 8px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 4px;
-}
-
-.checkbox-item {
-  font-size: 12px;
-}
-
-/* ===== 結果 ===== */
-#result {
-  margin-top: 20px;
-}
-
-#result div {
-  background: #ffe4ef;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-/* ===== スマホ最適化 ===== */
-@media (max-width: 600px) {
-  input {
-    width: 60%;
-    font-size: 16px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .song-title {
-    font-size: 16px;
-  }
+.item {
+  background: white;
+  border-radius: 12px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  font-size: 13px;
 }

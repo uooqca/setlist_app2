@@ -4,37 +4,28 @@
   <meta charset="UTF-8">
   <title>セトリアプリ</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- OCRライブラリ -->
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
-<h1>セトリアプリ</h1>
+<h1>セトリアプリ🎀</h1>
 
-<!-- メンバー -->
-<h2>メンバー追加</h2>
-<input id="memberInput" placeholder="名前">
+<div class="box">
+  <input type="file" id="imageInput" accept="image/*">
+  <button id="loadImageBtn">画像から読み込む</button>
+</div>
+
+<hr>
+
+<h2>メンバー</h2>
+<input type="text" id="memberInput" placeholder="名前">
 <button onclick="addMember()">追加</button>
 <div id="memberList"></div>
 
-<!-- 曲 -->
-<h2>曲追加</h2>
-<input id="songInput" placeholder="曲名">
+<h2>曲</h2>
+<input type="text" id="songInput" placeholder="曲名">
 <button onclick="addSong()">追加</button>
 <div id="songList"></div>
-
-<!-- 画像読み込み -->
-<h2>画像から読み込み</h2>
-<input type="file" id="imageInput" accept="image/*">
-<button onclick="readImage()">読み込む</button>
-
-<!-- 生成 -->
-<h2>セトリ生成</h2>
-<button onclick="generateSetlist()">生成</button>
-
-<!-- 結果 -->
-<div id="result"></div>
 
 <script src="script.js"></script>
 </body>
