@@ -10,20 +10,31 @@ h1 {
 
 .box {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 button {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 10px;
   border: none;
   background: #ffb6d5;
   color: white;
-  margin: 4px;
+  margin: 3px;
+  font-size: 13px;
+}
+
+.small-btn {
+  padding: 2px 6px;
+  font-size: 11px;
+  background: #eee;
+  color: #555;
 }
 
 input {
   padding: 8px;
   margin: 4px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 #memberList, #songList {
@@ -37,6 +48,7 @@ input {
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 6px 10px;
+  font-size: 13px;
 }
 
 #result {

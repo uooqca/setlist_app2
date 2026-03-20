@@ -2,7 +2,7 @@ let members = [];
 let songs = [];
 
 // ----------------
-// 手動追加
+// メンバー追加
 // ----------------
 function addMember() {
   const val = document.getElementById("memberInput").value.trim();
@@ -11,6 +11,9 @@ function addMember() {
   renderMembers();
 }
 
+// ----------------
+// 曲追加
+// ----------------
 function addSong() {
   const val = document.getElementById("songInput").value.trim();
   if (!val) return;
@@ -19,19 +22,68 @@ function addSong() {
 }
 
 // ----------------
-// 表示
+// メンバー表示（編集＆削除付き）
 // ----------------
 function renderMembers() {
   const list = document.getElementById("memberList");
   list.innerHTML = "";
-  members.forEach(m => {
+
+  members.forEach((m, index) => {
     const div = document.createElement("div");
     div.className = "item";
-    div.textContent = m;
+
+    div.innerHTML = `
+      ${m}
+      <button class="small-btn" onclick="editMember(${index})">✏️</button>
+      <button class="small-btn" onclick="deleteMember(${index})">×</button>
+    `;
+
     list.appendChild(div);
   });
 }
 
+// ----------------
+// メンバー編集
+// ----------------
+function editMember(index) {
+  const oldName = members[index];
+  const newName = prompt("名前を修正", oldName);
+
+  if (!newName || newName === oldName) return;
+
+  members[index] = newName;
+
+  // 曲側も更新
+  songs.forEach(song => {
+    song.members = song.members.map(m =>
+      m === oldName ? newName : m
+    );
+  });
+
+  renderMembers();
+  renderSongs();
+}
+
+// ----------------
+// メンバー削除
+// ----------------
+function deleteMember(index) {
+  const name = members[index];
+
+  members.splice(index, 1);
+
+  // 曲からも削除
+  songs.forEach(song => {
+    song.members = song.members.filter(m => m !== name);
+  });
+
+  renderMembers();
+  renderSongs();
+}
+
+// ----------------
+// 曲表示
+// ----------------
 function renderSongs() {
   const list = document.getElementById("songList");
   list.innerHTML = "";
@@ -43,8 +95,8 @@ function renderSongs() {
     div.innerHTML = `
       <b>${song.name}</b><br>
       ${song.members.join(", ")}<br>
-      <button onclick="selectMembers(${i})">メンバー選択</button>
-      <button onclick="setFixed(${i})">位置固定</button>
+      <button class="small-btn" onclick="selectMembers(${i})">メンバー</button>
+      <button class="small-btn" onclick="setFixed(${i})">固定</button>
     `;
 
     list.appendChild(div);
@@ -66,7 +118,7 @@ function selectMembers(index) {
 // 位置固定
 // ----------------
 function setFixed(index) {
-  const pos = prompt("何曲目に固定？（例：1）");
+  const pos = prompt("何曲目に固定？");
   if (!pos) return;
 
   songs[index].fixed = parseInt(pos) - 1;
@@ -88,7 +140,7 @@ document.getElementById("loadImageBtn").addEventListener("click", async () => {
 });
 
 // ----------------
-// パース（ポスター対応）
+// ポスター用パース
 // ----------------
 function parseText(text) {
   const lines = text.split("\n").map(l => l.trim()).filter(l => l);
@@ -129,16 +181,19 @@ function addDataFromOCR(parsedData) {
 
   renderMembers();
   renderSongs();
+
+  alert("追加できたよ✨");
 }
 
 // ----------------
-// セトリ生成（🔥本命）
+// セトリ生成
 // ----------------
 function generateSetlist() {
   let result = [];
   let remaining = [...songs];
+  let memberLast = {};
 
-  // 固定配置
+  // 固定
   remaining.forEach(song => {
     if (song.fixed !== null) {
       result[song.fixed] = song;
@@ -147,24 +202,19 @@ function generateSetlist() {
 
   remaining = remaining.filter(s => s.fixed === null);
 
-  let memberLast = {};
-
   for (let i = 0; i < songs.length; i++) {
 
     if (result[i]) continue;
 
     let placed = false;
 
+    // 4曲ルール
     for (let j = 0; j < remaining.length; j++) {
       const song = remaining[j];
 
-      let ok = true;
-
-      song.members.forEach(m => {
-        if (memberLast[m] !== undefined) {
-          if (i - memberLast[m] < 4) ok = false;
-        }
-      });
+      let ok = song.members.every(m =>
+        memberLast[m] === undefined || i - memberLast[m] >= 4
+      );
 
       if (ok) {
         result[i] = song;
@@ -175,17 +225,14 @@ function generateSetlist() {
       }
     }
 
-    // ダメなら3曲に緩和
+    // 3曲に緩和
     if (!placed) {
       for (let j = 0; j < remaining.length; j++) {
         const song = remaining[j];
 
-        let ok = true;
-        song.members.forEach(m => {
-          if (memberLast[m] !== undefined) {
-            if (i - memberLast[m] < 3) ok = false;
-          }
-        });
+        let ok = song.members.every(m =>
+          memberLast[m] === undefined || i - memberLast[m] >= 3
+        );
 
         if (ok) {
           result[i] = song;
@@ -197,7 +244,6 @@ function generateSetlist() {
     }
   }
 
-  // 表示（曲順のみ）
   document.getElementById("result").innerHTML =
     result.map((s, i) => `${i + 1}. ${s ? s.name : "未配置"}`).join("<br>");
 }
