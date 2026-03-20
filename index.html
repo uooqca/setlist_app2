@@ -12,20 +12,26 @@
 
 <div class="box">
   <input type="file" id="imageInput" accept="image/*">
-  <button id="loadImageBtn">画像から読み込む</button>
+  <button id="loadImageBtn">画像読み込み</button>
 </div>
 
 <hr>
 
 <h2>メンバー</h2>
-<input type="text" id="memberInput" placeholder="名前">
+<input type="text" id="memberInput">
 <button onclick="addMember()">追加</button>
 <div id="memberList"></div>
 
 <h2>曲</h2>
-<input type="text" id="songInput" placeholder="曲名">
+<input type="text" id="songInput">
 <button onclick="addSong()">追加</button>
 <div id="songList"></div>
+
+<hr>
+
+<h2>セトリ生成</h2>
+<button onclick="generateSetlist()">セトリ作成</button>
+<div id="result"></div>
 
 <script src="script.js"></script>
 </body>

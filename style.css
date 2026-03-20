@@ -10,24 +10,20 @@ h1 {
 
 .box {
   text-align: center;
-  margin-bottom: 10px;
 }
 
 button {
   padding: 10px 14px;
-  border: none;
   border-radius: 10px;
+  border: none;
   background: #ffb6d5;
   color: white;
   margin: 4px;
-  font-size: 14px;
 }
 
 input {
   padding: 8px;
   margin: 4px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
 }
 
 #memberList, #songList {
@@ -38,8 +34,12 @@ input {
 
 .item {
   background: white;
+  border: 1px solid #ddd;
   border-radius: 12px;
   padding: 6px 10px;
-  border: 1px solid #ddd;
-  font-size: 13px;
+}
+
+#result {
+  margin-top: 10px;
+  line-height: 1.8;
 }
